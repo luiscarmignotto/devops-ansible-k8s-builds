@@ -1,0 +1,6 @@
+# - name: Deploy Jenkins 
+#   import_playbook: playbooks/deploy_jenkins.yml
+# - name: Deploy docker-registry 
+#   import_playbook: playbooks/deploy_docker_registry.yml
+- name: Deploy Fipewatcher 
+  import_playbook: playbooks/deploy_fipewatcher.yml

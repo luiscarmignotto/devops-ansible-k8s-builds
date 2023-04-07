@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fipewatcher-backend-deployment
+  labels:
+    app: fipewatcher-backend
+  namespace: backend    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fipewatcher-backend
+  template:
+    metadata:
+      labels:
+        app: fipewatcher-backend
+    spec:
+      containers:
+        - name: fipewatcher-backend
+          image: docker.io/library/fipewatcher-backend:SNAPSHOT-1.0.0
+          ports:
+            - containerPort: 4000

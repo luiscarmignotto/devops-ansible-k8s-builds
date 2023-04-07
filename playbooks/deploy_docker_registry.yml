@@ -1,0 +1,6 @@
+- hosts: local_lab
+  gather_facts: no
+  tasks:
+    - include_role: 
+        name: docker-registry
+      tags: docker-registry

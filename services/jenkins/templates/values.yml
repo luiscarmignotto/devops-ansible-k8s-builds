@@ -1,0 +1,12 @@
+controller:
+  release: 
+    name: jenkins
+  adminUser: "jenkins-admin"
+  admin:
+    existingSecret: jenkins-secrets
+    userKey: username
+    passwordKey: password
+# agent:
+  # directConnection: true
+  # alwaysPullImage: true
+  # jenkinsTunnel: "jenkins-agent:50000"

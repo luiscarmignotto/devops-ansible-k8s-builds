@@ -1,0 +1,973 @@
+NAME: jenkins
+LAST DEPLOYED: Sun Mar 26 20:39:22 2023
+NAMESPACE: jenkins
+STATUS: pending-install
+REVISION: 1
+USER-SUPPLIED VALUES:
+agent:
+  alwaysPullImage: true
+  directConnection: true
+controller:
+  admin:
+    existingSecret: jenkins-secrets
+    passwordKey: password
+    userKey: username
+  adminUser: jenkins-admin
+  release:
+    name: jenkins
+
+COMPUTED VALUES:
+additionalAgents: {}
+agent:
+  TTYEnabled: false
+  additionalContainers: []
+  alwaysPullImage: true
+  annotations: {}
+  args: ${computer.jnlpmac} ${computer.name}
+  command: null
+  componentName: jenkins-agent
+  connectTimeout: 100
+  containerCap: 10
+  customJenkinsLabels: []
+  defaultsProviderTemplate: ""
+  directConnection: true
+  disableDefaultAgent: false
+  enabled: true
+  envVars: []
+  hostNetworking: false
+  idleMinutes: 0
+  image: jenkins/inbound-agent
+  imagePullSecretName: null
+  jenkinsTunnel: null
+  jenkinsUrl: null
+  kubernetesConnectTimeout: 5
+  kubernetesReadTimeout: 15
+  maxRequestsPerHostStr: "32"
+  namespace: null
+  nodeSelector: {}
+  nodeUsageMode: NORMAL
+  podName: default
+  podRetention: Never
+  podTemplates: {}
+  privileged: false
+  resources:
+    limits:
+      cpu: 512m
+      memory: 512Mi
+    requests:
+      cpu: 512m
+      memory: 512Mi
+  runAsGroup: null
+  runAsUser: null
+  secretEnvVars: []
+  showRawYaml: true
+  sideContainerName: jnlp
+  tag: 4.11.2-4
+  volumes: []
+  websocket: false
+  workingDir: /home/jenkins/agent
+  workspaceVolume: {}
+  yamlMergeStrategy: override
+  yamlTemplate: ""
+awsSecurityGroupPolicies:
+  enabled: false
+  policies:
+  - name: ""
+    podSelector: {}
+    securityGroupIds: []
+backup:
+  activeDeadlineSeconds: ""
+  componentName: backup
+  destination: s3://jenkins-data/backup
+  enabled: false
+  env: []
+  existingSecret: {}
+  extraArgs: []
+  fsGroup: 1000
+  image:
+    repository: maorfr/kube-tasks
+    tag: 0.2.0
+  imagePullSecretName: null
+  labels: {}
+  onlyJobs: false
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 1
+      memory: 1Gi
+  runAsUser: 1000
+  schedule: 0 2 * * *
+  securityContextCapabilities: {}
+  serviceAccount:
+    annotations: {}
+    create: true
+    name: null
+  usePodSecurityContext: true
+checkDeprecation: true
+clusterZone: cluster.local
+controller:
+  JCasC:
+    authorizationStrategy: |-
+      loggedInUsersCanDoAnything:
+        allowAnonymousRead: false
+    configScripts: {}
+    configUrls: []
+    defaultConfig: true
+    security:
+      apiToken:
+        creationOfLegacyTokenEnabled: false
+        tokenGenerationOnCreationEnabled: false
+        usageStatisticsEnabled: true
+    securityRealm: |-
+      local:
+        allowsSignup: false
+        enableCaptcha: false
+        users:
+        - id: "${chart-admin-username}"
+          name: "Jenkins Admin"
+          password: "${chart-admin-password}"
+  additionalExistingSecrets: []
+  additionalPlugins: []
+  additionalSecrets: []
+  admin:
+    existingSecret: jenkins-secrets
+    passwordKey: password
+    userKey: username
+  adminSecret: true
+  adminUser: jenkins-admin
+  affinity: {}
+  agentListenerEnabled: true
+  agentListenerExternalTrafficPolicy: null
+  agentListenerHostPort: null
+  agentListenerLoadBalancerIP: null
+  agentListenerLoadBalancerSourceRanges:
+  - 0.0.0.0/0
+  agentListenerNodePort: null
+  agentListenerPort: 50000
+  agentListenerServiceAnnotations: {}
+  agentListenerServiceType: ClusterIP
+  backendconfig:
+    annotations: {}
+    apiVersion: extensions/v1beta1
+    enabled: false
+    labels: {}
+    name: null
+    spec: {}
+  cloudName: kubernetes
+  componentName: jenkins-controller
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsGroup: 1000
+    runAsUser: 1000
+  csrf:
+    defaultCrumbIssuer:
+      enabled: true
+      proxyCompatability: true
+  customInitContainers: []
+  customJenkinsLabels: []
+  disableRememberMe: false
+  disabledAgentProtocols:
+  - JNLP-connect
+  - JNLP2-connect
+  enableRawHtmlMarkupFormatter: false
+  executorMode: NORMAL
+  existingSecret: null
+  extraPorts: []
+  fsGroup: 1000
+  googlePodMonitor:
+    enabled: false
+    scrapeEndpoint: /prometheus
+    scrapeInterval: 60s
+  healthProbes: true
+  hostAliases: []
+  hostNetworking: false
+  httpsKeyStore:
+    disableSecretMount: false
+    enable: false
+    fileName: keystore.jks
+    httpPort: 8081
+    jenkinsHttpsJksSecretName: ""
+    jenkinsKeyStoreBase64Encoded: |
+      /u3+7QAAAAIAAAABAAAAAQANamVua2luc2NpLmNvbQAAAW2r/b1ZAAAFATCCBP0wDgYKKwYBBAEq
+      AhEBAQUABIIE6QbCqasvoHS0pSwYqSvdydMCB9t+VNfwhFIiiuAelJfO5sSe2SebJbtwHgLcRz1Z
+      gMtWgOSFdl3bWSzA7vrW2LED52h+jXLYSWvZzuDuh8hYO85m10ikF6QR+dTi4jra0whIFDvq3pxe
+      TnESxEsN+DvbZM3jA3qsjQJSeISNpDjO099dqQvHpnCn18lyk7J4TWJ8sOQQb1EM2zDAfAOSqA/x
+      QuPEFl74DlY+5DIk6EBvpmWhaMSvXzWZACGA0sYqa157dq7O0AqmuLG/EI5EkHETO4CrtBW+yLcy
+      2dUCXOMA+j+NjM1BjrQkYE5vtSfNO6lFZcISyKo5pTFlcA7ut0Fx2nZ8GhHTn32CpeWwNcZBn1gR
+      pZVt6DxVVkhTAkMLhR4rL2wGIi/1WRs23ZOLGKtyDNvDHnQyDiQEoJGy9nAthA8aNHa3cfdF10vB
+      Drb19vtpFHmpvKEEhpk2EBRF4fTi644Fuhu2Ied6118AlaPvEea+n6G4vBz+8RWuVCmZjLU+7h8l
+      Hy3/WdUPoIL5eW7Kz+hS+sRTFzfu9C48dMkQH3a6f3wSY+mufizNF9U298r98TnYy+PfDJK0bstG
+      Ph6yPWx8DGXKQBwrhWJWXI6JwZDeC5Ny+l8p1SypTmAjpIaSW3ge+KgcL6Wtt1R5hUV1ajVwVSUi
+      HF/FachKqPqyLJFZTGjNrxnmNYpt8P1d5JTvJfmfr55Su/P9n7kcyWp7zMcb2Q5nlXt4tWogOHLI
+      OzEWKCacbFfVHE+PpdrcvCVZMDzFogIq5EqGTOZe2poPpBVE+1y9mf5+TXBegy5HToLWvmfmJNTO
+      NCDuBjgLs2tdw2yMPm4YEr57PnMX5gGTC3f2ZihXCIJDCRCdQ9sVBOjIQbOCzxFXkVITo0BAZhCi
+      Yz61wt3Ud8e//zhXWCkCsSV+IZCxxPzhEFd+RFVjW0Nm9hsb2FgAhkXCjsGROgoleYgaZJWvQaAg
+      UyBzMmKDPKTllBHyE3Gy1ehBNGPgEBChf17/9M+j8pcm1OmlM434ctWQ4qW7RU56//yq1soFY0Te
+      fu2ei03a6m68fYuW6s7XEEK58QisJWRAvEbpwu/eyqfs7PsQ+zSgJHyk2rO95IxdMtEESb2GRuoi
+      Bs+AHNdYFTAi+GBWw9dvEgqQ0Mpv0//6bBE/Fb4d7b7f56uUNnnE7mFnjGmGQN+MvC62pfwfvJTT
+      EkT1iZ9kjM9FprTFWXT4UmO3XTvesGeE50sV9YPm71X4DCQwc4KE8vyuwj0s6oMNAUACW2ClU9QQ
+      y0tRpaF1tzs4N42Q5zl0TzWxbCCjAtC3u6xf+c8MCGrr7DzNhm42LOQiHTa4MwX4x96q7235oiAU
+      iQqSI/hyF5yLpWw4etyUvsx2/0/0wkuTU1FozbLoCWJEWcPS7QadMrRRISxHf0YobIeQyz34regl
+      t1qSQ3dCU9D6AHLgX6kqllx4X0fnFq7LtfN7fA2itW26v+kAT2QFZ3qZhINGfofCja/pITC1uNAZ
+      gsJaTMcQ600krj/ynoxnjT+n1gmeqThac6/Mi3YlVeRtaxI2InL82ZuD+w/dfY9OpPssQjy3xiQa
+      jPuaMWXRxz/sS9syOoGVH7XBwKrWpQcpchozWJt40QV5DslJkclcr8aC2AGlzuJMTdEgz1eqV0+H
+      bAXG9HRHN/0eJTn1/QAAAAEABVguNTA5AAADjzCCA4swggJzAhRGqVxH4HTLYPGO4rzHcCPeGDKn
+      xTANBgkqhkiG9w0BAQsFADCBgTELMAkGA1UEBhMCY2ExEDAOBgNVBAgMB29udGFyaW8xEDAOBgNV
+      BAcMB3Rvcm9udG8xFDASBgNVBAoMC2plbmtpbnN0ZXN0MRkwFwYDVQQDDBBqZW5raW5zdGVzdC5p
+      bmZvMR0wGwYJKoZIhvcNAQkBFg50ZXN0QHRlc3QuaW5mbzAeFw0xOTEwMDgxNTI5NTVaFw0xOTEx
+      MDcxNTI5NTVaMIGBMQswCQYDVQQGEwJjYTEQMA4GA1UECAwHb250YXJpbzEQMA4GA1UEBwwHdG9y
+      b250bzEUMBIGA1UECgwLamVua2luc3Rlc3QxGTAXBgNVBAMMEGplbmtpbnN0ZXN0LmluZm8xHTAb
+      BgkqhkiG9w0BCQEWDnRlc3RAdGVzdC5pbmZvMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+      AQEA02q352JTHGvROMBhSHvSv+vnoOTDKSTz2aLQn0tYrIRqRo+8bfmMjXuhkwZPSnCpvUGNAJ+w
+      Jrt/dqMoYUjCBkjylD/qHmnXN5EwS1cMg1Djh65gi5JJLFJ7eNcoSsr/0AJ+TweIal1jJSP3t3PF
+      9Uv21gm6xdm7HnNK66WpUUXLDTKaIs/jtagVY1bLOo9oEVeLN4nT2CYWztpMvdCyEDUzgEdDbmrP
+      F5nKUPK5hrFqo1Dc5rUI4ZshL3Lpv398aMxv6n2adQvuL++URMEbXXBhxOrT6rCtYzbcR5fkwS9i
+      d3Br45CoWOQro02JAepoU0MQKY5+xQ4Bq9Q7tB9BAwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAe
+      4xc+mSvKkrKBHg9/zpkWgZUiOp4ENJCi8H4tea/PCM439v6y/kfjT/okOokFvX8N5aa1OSz2Vsrl
+      m8kjIc6hiA7bKzT6lb0EyjUShFFZ5jmGVP4S7/hviDvgB5yEQxOPpumkdRP513YnEGj/o9Pazi5h
+      /MwpRxxazoda9r45kqQpyG+XoM4pB+Fd3JzMc4FUGxfVPxJU4jLawnJJiZ3vqiSyaB0YyUL+Er1Q
+      6NnqtR4gEBF0ZVlQmkycFvD4EC2boP943dLqNUvop+4R3SM1QMM6P5u8iTXtHd/VN4MwMyy1wtog
+      hYAzODo1Jt59pcqqKJEas0C/lFJEB3frw4ImNx5fNlJYOpx+ijfQs9m39CevDq0=
+    password: password
+    path: /var/jenkins_keystore
+  image: jenkins/jenkins
+  imagePullPolicy: Always
+  imagePullSecretName: null
+  ingress:
+    annotations: {}
+    apiVersion: extensions/v1beta1
+    enabled: false
+    hostName: null
+    labels: {}
+    paths: []
+    tls: null
+  initScripts: []
+  initializeOnce: false
+  installLatestPlugins: true
+  installLatestSpecifiedPlugins: false
+  installPlugins:
+  - kubernetes:3734.v562b_b_a_627ea_c
+  - workflow-aggregator:590.v6a_d052e5a_a_b_5
+  - git:4.13.0
+  - configuration-as-code:1569.vb_72405b_80249
+  jenkinsHome: /var/jenkins_home
+  jenkinsRef: /usr/share/jenkins/ref
+  jenkinsWar: /usr/share/jenkins/jenkins.war
+  lifecycle: null
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+  markupFormatter: plainText
+  nodeSelector: {}
+  numExecutors: 0
+  overwritePluginsFromImage: true
+  podAnnotations: {}
+  podDisruptionBudget:
+    annotations: {}
+    apiVersion: policy/v1beta1
+    enabled: false
+    labels: {}
+  podLabels: {}
+  priorityClassName: null
+  probes:
+    livenessProbe:
+      failureThreshold: 5
+      httpGet:
+        path: '{{ default "" .Values.controller.jenkinsUriPrefix }}/login'
+        port: http
+      periodSeconds: 10
+      timeoutSeconds: 5
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: '{{ default "" .Values.controller.jenkinsUriPrefix }}/login'
+        port: http
+      periodSeconds: 10
+      timeoutSeconds: 5
+    startupProbe:
+      failureThreshold: 12
+      httpGet:
+        path: '{{ default "" .Values.controller.jenkinsUriPrefix }}/login'
+        port: http
+      periodSeconds: 10
+      timeoutSeconds: 5
+  projectNamingStrategy: standard
+  prometheus:
+    alertingRulesAdditionalLabels: {}
+    alertingrules: []
+    enabled: false
+    metricRelabelings: []
+    prometheusRuleNamespace: ""
+    relabelings: []
+    scrapeEndpoint: /prometheus
+    scrapeInterval: 60s
+    serviceMonitorAdditionalLabels: {}
+  release:
+    name: jenkins
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4096Mi
+    requests:
+      cpu: 50m
+      memory: 256Mi
+  route:
+    annotations: {}
+    enabled: false
+    labels: {}
+  runAsUser: 1000
+  schedulerName: ""
+  scriptApproval: []
+  secondaryingress:
+    annotations: {}
+    apiVersion: extensions/v1beta1
+    enabled: false
+    hostName: null
+    labels: {}
+    paths: []
+    tls: null
+  secretClaims: []
+  securityContextCapabilities: {}
+  serviceAnnotations: {}
+  serviceExternalTrafficPolicy: null
+  serviceLabels: {}
+  servicePort: 8080
+  serviceType: ClusterIP
+  shareProcessNamespace: false
+  sidecars:
+    configAutoReload:
+      containerSecurityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+      enabled: true
+      folder: /var/jenkins_home/casc_configs
+      image: kiwigrid/k8s-sidecar:1.15.0
+      imagePullPolicy: IfNotPresent
+      reqRetryConnect: 10
+      resources: {}
+      sshTcpPort: 1044
+    other: []
+  statefulSetAnnotations: {}
+  statefulSetLabels: {}
+  tagLabel: jdk11
+  targetPort: 8080
+  terminationGracePeriodSeconds: null
+  terminationMessagePath: null
+  terminationMessagePolicy: null
+  testEnabled: true
+  tolerations: []
+  updateStrategy: {}
+  usePodSecurityContext: true
+cronJob:
+  apiVersion: batch/v1
+helmtest:
+  bats:
+    image: bats/bats
+    tag: 1.2.1
+networkPolicy:
+  apiVersion: networking.k8s.io/v1
+  enabled: false
+  externalAgents: {}
+  internalAgents:
+    allowed: true
+    namespaceLabels: {}
+    podLabels: {}
+persistence:
+  accessMode: ReadWriteOnce
+  annotations: {}
+  enabled: true
+  existingClaim: null
+  labels: {}
+  mounts: null
+  size: 8Gi
+  storageClass: null
+  volumes: null
+rbac:
+  create: true
+  readSecrets: false
+renderHelmLabels: true
+serviceAccount:
+  annotations: {}
+  create: true
+  extraLabels: {}
+  imagePullSecretName: null
+  name: null
+serviceAccountAgent:
+  annotations: {}
+  create: false
+  extraLabels: {}
+  imagePullSecretName: null
+  name: null
+
+HOOKS:
+---
+# Source: jenkins/templates/tests/test-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-tests
+  namespace: jenkins
+  annotations:
+    "helm.sh/hook": test
+data:
+  run.sh: |-
+    @test "Testing Jenkins UI is accessible" {
+      curl --retry 48 --retry-delay 10 jenkins:8080/login
+    }
+---
+# Source: jenkins/templates/tests/jenkins-test.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "jenkins-ui-test-4rb5g"
+  namespace: jenkins
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  initContainers:
+    - name: "test-framework"
+      image: bats/bats:1.2.1
+      command:
+        - "bash"
+        - "-c"
+      args:
+        - |
+          # copy bats to tools dir
+          set -ex
+          cp -R /opt/bats /tools/bats/
+      volumeMounts:
+      - mountPath: /tools
+        name: tools
+  containers:
+    - name: jenkins-ui-test
+      image: jenkins/jenkins:2.387.1-jdk11
+      command: ["/tools/bats/bin/bats", "-t", "/tests/run.sh"]
+      volumeMounts:
+      - mountPath: /tests
+        name: tests
+        readOnly: true
+      - mountPath: /tools
+        name: tools
+  volumes:
+  - name: tests
+    configMap:
+      name: jenkins-tests
+  - name: tools
+    emptyDir: {}
+  restartPolicy: Never
+MANIFEST:
+---
+# Source: jenkins/templates/service-account.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+---
+# Source: jenkins/templates/config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+data:
+  apply_config.sh: |-
+    set -e
+    echo "disable Setup Wizard"
+    # Prevent Setup Wizard when JCasC is enabled
+    echo $JENKINS_VERSION > /var/jenkins_home/jenkins.install.UpgradeWizard.state
+    echo $JENKINS_VERSION > /var/jenkins_home/jenkins.install.InstallUtil.lastExecVersion
+    echo "download plugins"
+    # Install missing plugins
+    cp /var/jenkins_config/plugins.txt /var/jenkins_home;
+    rm -rf /usr/share/jenkins/ref/plugins/*.lock
+    version () { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+    if [ -f "/usr/share/jenkins/jenkins.war" ] && [ -n "$(command -v jenkins-plugin-cli)" 2>/dev/null ] && [ $(version $(jenkins-plugin-cli --version)) -ge $(version "2.1.1") ]; then
+      jenkins-plugin-cli --verbose --war "/usr/share/jenkins/jenkins.war" --plugin-file "/var/jenkins_home/plugins.txt" --latest true;
+    else
+      /usr/local/bin/install-plugins.sh `echo $(cat /var/jenkins_home/plugins.txt)`;
+    fi
+    echo "copy plugins to shared volume"
+    # Copy plugins to shared volume
+    yes n | cp -i /usr/share/jenkins/ref/plugins/* /var/jenkins_plugins/;
+    echo "finished initialization"
+  plugins.txt: |-
+    kubernetes:3734.v562b_b_a_627ea_c
+    workflow-aggregator:590.v6a_d052e5a_a_b_5
+    git:4.13.0
+    configuration-as-code:1569.vb_72405b_80249
+---
+# Source: jenkins/templates/jcasc-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "jenkins-jenkins-jcasc-config"
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": jenkins
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+    jenkins-jenkins-config: "true"
+data:
+  jcasc-default-config.yaml: |-
+    jenkins:
+      authorizationStrategy:
+        loggedInUsersCanDoAnything:
+          allowAnonymousRead: false
+      securityRealm:
+        local:
+          allowsSignup: false
+          enableCaptcha: false
+          users:
+          - id: "${chart-admin-username}"
+            name: "Jenkins Admin"
+            password: "${chart-admin-password}"
+      disableRememberMe: false
+      mode: NORMAL
+      numExecutors: 0
+      labelString: ""
+      projectNamingStrategy: "standard"
+      markupFormatter:
+        plainText
+      clouds:
+      - kubernetes:
+          containerCapStr: "10"
+          defaultsProviderTemplate: ""
+          connectTimeout: "5"
+          readTimeout: "15"
+          directConnection: true
+          maxRequestsPerHostStr: "32"
+          name: "kubernetes"
+          namespace: "jenkins"
+          serverUrl: "https://kubernetes.default"
+          podLabels:
+          - key: "jenkins/jenkins-jenkins-agent"
+            value: "true"
+          templates:
+            - name: "default"
+              namespace: "jenkins"
+              id: ffef49d780f34c362fec38ef55457a8e07a714a404135e1d4aef4d76a26a7d72
+              containers:
+              - name: "jnlp"
+                alwaysPullImage: true
+                args: "^${computer.jnlpmac} ^${computer.name}"
+                command: 
+                envVars:
+                  - envVar:
+                      key: "JENKINS_DIRECT_CONNECTION"
+                      jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
+                image: "jenkins/inbound-agent:4.11.2-4"
+                privileged: "false"
+                resourceLimitCpu: 512m
+                resourceLimitMemory: 512Mi
+                resourceRequestCpu: 512m
+                resourceRequestMemory: 512Mi
+                runAsUser: 
+                runAsGroup: 
+                ttyEnabled: false
+                workingDir: /home/jenkins/agent
+              idleMinutes: 0
+              instanceCap: 2147483647
+              label: "jenkins-jenkins-agent "
+              nodeUsageMode: "NORMAL"
+              podRetention: Never
+              showRawYaml: true
+              serviceAccount: "default"
+              slaveConnectTimeoutStr: "100"
+              yamlMergeStrategy: override
+      crumbIssuer:
+        standard:
+          excludeClientIPFromCrumb: true
+    security:
+      apiToken:
+        creationOfLegacyTokenEnabled: false
+        tokenGenerationOnCreationEnabled: false
+        usageStatisticsEnabled: true
+    unclassified:
+      location:
+        adminAddress: 
+        url: http://jenkins:8080
+---
+# Source: jenkins/templates/home-pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "8Gi"
+---
+# Source: jenkins/templates/rbac.yaml
+# This role is used to allow Jenkins scheduling of agents via Kubernetes plugin.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jenkins-schedule-agents
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/exec", "pods/log", "persistentvolumeclaims", "events"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods", "pods/exec", "persistentvolumeclaims"]
+  verbs: ["create", "delete", "deletecollection", "patch", "update"]
+---
+# Source: jenkins/templates/rbac.yaml
+# The sidecar container which is responsible for reloading configuration changes
+# needs permissions to watch ConfigMaps
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: jenkins-casc-reload
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "watch", "list"]
+---
+# Source: jenkins/templates/rbac.yaml
+# We bind the role to the Jenkins service account. The role binding is created in the namespace
+# where the agents are supposed to run.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-schedule-agents
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jenkins-schedule-agents
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+  namespace: jenkins
+---
+# Source: jenkins/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-watch-configmaps
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jenkins-casc-reload
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+  namespace: jenkins
+---
+# Source: jenkins/templates/jenkins-agent-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-agent
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+spec:
+  ports:
+    - port: 50000
+      targetPort: 50000
+      name: agent-listener
+  selector:
+    "app.kubernetes.io/component": "jenkins-controller"
+    "app.kubernetes.io/instance": "jenkins"
+  type: ClusterIP
+---
+# Source: jenkins/templates/jenkins-controller-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+spec:
+  ports:
+    - port: 8080
+      name: http
+      targetPort: 8080
+  selector:
+    "app.kubernetes.io/component": "jenkins-controller"
+    "app.kubernetes.io/instance": "jenkins"
+  type: ClusterIP
+---
+# Source: jenkins/templates/jenkins-controller-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    "app.kubernetes.io/name": 'jenkins'
+    "helm.sh/chart": "jenkins-4.3.9"
+    "app.kubernetes.io/managed-by": "Helm"
+    "app.kubernetes.io/instance": "jenkins"
+    "app.kubernetes.io/component": "jenkins-controller"
+spec:
+  serviceName: jenkins
+  replicas: 1
+  selector:
+    matchLabels:
+      "app.kubernetes.io/component": "jenkins-controller"
+      "app.kubernetes.io/instance": "jenkins"
+  template:
+    metadata:
+      labels:
+        "app.kubernetes.io/name": 'jenkins'
+        "app.kubernetes.io/managed-by": "Helm"
+        "app.kubernetes.io/instance": "jenkins"
+        "app.kubernetes.io/component": "jenkins-controller"
+      annotations:
+        checksum/config: 2b0c4702e7dc5a1c165c86e02e5a2c8804a2f5b8c94c9735042c0dbdcba59c2f
+    spec:
+      securityContext:
+    
+        runAsUser: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      serviceAccountName: "jenkins"
+      initContainers:
+        - name: "init"
+          image: "jenkins/jenkins:2.387.1-jdk11"
+          imagePullPolicy: "Always"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+          command: [ "sh", "/var/jenkins_config/apply_config.sh" ]
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 4096Mi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /var/jenkins_home
+              name: jenkins-home
+            - mountPath: /var/jenkins_config
+              name: jenkins-config
+            - mountPath: /usr/share/jenkins/ref/plugins
+              name: plugins
+            - mountPath: /var/jenkins_plugins
+              name: plugin-dir
+            - mountPath: /tmp
+              name: tmp-volume
+      containers:
+        - name: jenkins
+          image: "jenkins/jenkins:2.387.1-jdk11"
+          imagePullPolicy: "Always"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 1000
+            runAsUser: 1000
+          args: [ "--httpPort=8080"]
+          env:
+            - name: SECRETS
+              value: /run/secrets/additional
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: JAVA_OPTS
+              value: >-
+                 -Dcasc.reload.token=$(POD_NAME) 
+            - name: JENKINS_OPTS
+              value: >-
+                 --webroot=/var/jenkins_cache/war 
+            - name: JENKINS_SLAVE_AGENT_PORT
+              value: "50000"
+
+            - name: CASC_JENKINS_CONFIG
+              value: /var/jenkins_home/casc_configs
+          ports:
+            - containerPort: 8080
+              name: http
+            - containerPort: 50000
+              name: agent-listener
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: '/login'
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: '/login'
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: '/login'
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 4096Mi
+            requests:
+              cpu: 50m
+              memory: 256Mi
+          volumeMounts:
+            - mountPath: /var/jenkins_home
+              name: jenkins-home
+              readOnly: false
+            - mountPath: /var/jenkins_config
+              name: jenkins-config
+              readOnly: true
+            - mountPath: /usr/share/jenkins/ref/plugins/
+              name: plugin-dir
+              readOnly: false
+            - name: sc-config-volume
+              mountPath: /var/jenkins_home/casc_configs
+            - name: jenkins-secrets
+              mountPath: /run/secrets/additional
+              readOnly: true
+            - name: jenkins-cache
+              mountPath: /var/jenkins_cache
+            - mountPath: /tmp
+              name: tmp-volume
+        - name: config-reload
+          image: "kiwigrid/k8s-sidecar:1.15.0"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: LABEL
+              value: "jenkins-jenkins-config"
+            - name: FOLDER
+              value: "/var/jenkins_home/casc_configs"
+            - name: NAMESPACE
+              value: 'jenkins'
+            - name: REQ_URL
+              value: "http://localhost:8080/reload-configuration-as-code/?casc-reload-token=$(POD_NAME)"
+            - name: REQ_METHOD
+              value: "POST"
+            - name: REQ_RETRY_CONNECT
+              value: "10"
+          resources:
+            {}
+          volumeMounts:
+            - name: sc-config-volume
+              mountPath: "/var/jenkins_home/casc_configs"
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
+
+      volumes:
+      - name: plugins
+        emptyDir: {}
+      - name: jenkins-config
+        configMap:
+          name: jenkins
+      - name: plugin-dir
+        emptyDir: {}
+      - name: jenkins-secrets
+        projected:
+          sources:
+          - secret:
+              name: jenkins-secrets
+              items:
+                - key: username
+                  path: chart-admin-username
+                - key: password
+                  path: chart-admin-password
+      - name: jenkins-cache
+        emptyDir: {}
+      - name: jenkins-home
+        persistentVolumeClaim:
+          claimName: jenkins
+      - name: sc-config-volume
+        emptyDir: {}
+      - name: tmp-volume
+        emptyDir: {}
+
+NOTES:
+1. Get your 'jenkins-admin' user password by running:
+  kubectl exec --namespace jenkins -it svc/jenkins -c jenkins -- /bin/cat /run/secrets/additional/chart-admin-password && echo
+2. Get the Jenkins URL to visit by running these commands in the same shell:
+  echo http://127.0.0.1:8080
+  kubectl --namespace jenkins port-forward svc/jenkins 8080:8080
+
+3. Login with the password from step 1 and the username: jenkins-admin
+4. Configure security realm and authorization strategy
+5. Use Jenkins Configuration as Code by specifying configScripts in your values.yaml file, see documentation: http://127.0.0.1:8080/configuration-as-code and examples: https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
+
+For more information on running Jenkins on Kubernetes, visit:
+https://cloud.google.com/solutions/jenkins-on-container-engine
+
+For more information about Jenkins Configuration as Code, visit:
+https://jenkins.io/projects/jcasc/
+
+
+NOTE: Consider using a custom image with pre-installed plugins

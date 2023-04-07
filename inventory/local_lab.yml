@@ -1,0 +1,5 @@
+all:
+  children:
+    local_lab:
+      hosts:
+        localhost:

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ service_config.name }}-deployment
+  labels:
+    app: {{ service_config.name }}
+  namespace: {{ service_config.namespace }}
+spec:
+  replicas: {{ service_config.service.replicas }}
+  selector:
+    matchLabels:
+      app: {{ service_config.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ service_config.name }}
+    spec:
+      containers:
+        - name: {{ service_config.name }}
+          image: {{ service_config.image_name }}:{{ service_config.image_tag }}
+          ports:
+            - containerPort: 80
