@@ -4,7 +4,7 @@ solution:
       name: fipewatcher
       namespace: frontend
       image_name: fipewatcher
-      image_tag: 1.2.0
+      image_tag: 1.2.4
       registryUrl: docker-registry:5000
       service:
         replicas: 1
@@ -23,15 +23,13 @@ solution:
       namespace: jenkins
       repourl: https://charts.jenkins.io
       chart_ref: jenkins
-      chart_version: "4.3.9"
-      service: 
+      chart_version: 4.3.9
+      service:
         replicas: 1
     docker_registry:
       name: docker-registry
       namespace: docker-registry
       repourl: https://helm.twun.io
       chart_ref: docker-registry
-      service: 
+      service:
         replicas: 1
-
-
