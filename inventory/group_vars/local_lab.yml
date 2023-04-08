@@ -8,7 +8,7 @@ solution:
       registryUrl: docker-registry:5000
       service:
         replicas: 1
-    fipewatcher-backend:
+    fipewatcher_backend:
       name: fipewatcher-backend
       namespace: backend
       image_name: fipewatcher-backend
