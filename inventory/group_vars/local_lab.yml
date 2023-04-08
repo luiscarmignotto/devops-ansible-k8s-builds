@@ -8,6 +8,14 @@ solution:
       registryUrl: docker-registry:5000
       service:
         replicas: 1
+    fipewatcher-backend:
+      name: fipewatcher-backend
+      namespace: backend
+      image_name: fipewatcher-backend
+      image_tag: 1.1.0
+      registryUrl: docker-registry:5000
+      service:
+        replicas: 1
 
   devops:
     jenkins:

@@ -4,3 +4,5 @@
 #   import_playbook: playbooks/deploy_docker_registry.yml
 - name: Deploy Fipewatcher 
   import_playbook: playbooks/deploy_fipewatcher.yml
+- name: Deploy Fipewatcher Backend
+  import_playbook: playbooks/deploy_fipewatcher-backend.yml
