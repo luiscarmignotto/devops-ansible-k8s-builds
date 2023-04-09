@@ -4,7 +4,7 @@ solution:
       name: fipewatcher
       namespace: frontend
       image_name: fipewatcher
-      image_tag: 1.2.5
+      image_tag: 1.2.6
       registryUrl: docker-registry:5000
       service:
         replicas: 1
