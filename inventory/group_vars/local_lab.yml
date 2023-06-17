@@ -4,15 +4,16 @@ solution:
       name: fipewatcher
       namespace: frontend
       image_name: fipewatcher
-      image_tag: 1.2.4
+      image_tag: 1.3.4
       registryUrl: docker-registry:5000
       service:
         replicas: 1
+        nodePort: 30080
     fipewatcher_backend:
       name: fipewatcher-backend
       namespace: backend
       image_name: fipewatcher-backend
-      image_tag: 1.2.0
+      image_tag: 1.2.8
       registryUrl: docker-registry:5000
       service:
         replicas: 1
